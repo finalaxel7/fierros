@@ -1,4 +1,4 @@
-package simulador_procesos;
+package simulador_procesos.fierros;
 
 public class estadistica {
     	int sumaTiempo=0;
