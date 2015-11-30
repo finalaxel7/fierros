@@ -4,110 +4,111 @@
  * and open the template in the editor.
  */
 package simulador_procesos.fierros;
+
 import java.util.Timer;
 import java.util.TimerTask;
+
 /**
  *
  * @author axel y wendy XD
  */
-
-<<<<<<< HEAD
-=======
-//holas
->>>>>>> origin/master
 public class procesamiento {
+
     Timer timer = new Timer();
-    int ID=1;
+    int ID = 1;
     memoria aux;
-    memoria inicio=new memoria();
-    memoria fin= new memoria();
-    proceso nada= new proceso();
-    int memtotal,memactualB=0,memactualF=0,memactualW=0, memmax,tiempomax,tiempolibre;
+    memoria inicio = new memoria();
+    memoria fin = new memoria();
+    proceso nada = new proceso();
+    int memtotal, memactualB = 0, memactualF = 0, memactualW = 0, memmax, tiempomax, tiempolibre;
     memoria initialF, initialW, initialB;
     int veces;
-    int vel=1000;
+    int vel = 1000;
     int eliminadosF, eliminadosB, eliminadosW;
-    public procesamiento(int mem, int maxm, int tiempo, int maxt){
-    	memtotal=mem;
-    	memmax=maxm;
-    	tiempolibre=tiempo;
-        veces=tiempo;
-    	tiempomax=maxt;
-    	initialF=new memoria(memtotal);
-        
+    int tamanioprocesosF,tamanioprocesosB,tamanioprocesosW;
+    estadistica stadF = new estadistica();
+    estadistica stadB = new estadistica();
+    estadistica stadW = new estadistica();
+    
+    public procesamiento(int mem, int maxm, int tiempo, int maxt) {
+        memtotal = mem;
+        memmax = maxm;
+        tiempolibre = tiempo;
+        veces = tiempo;
+        tiempomax = maxt;
+        initialF = new memoria(memtotal);
+
         inicio.setSig(initialF);
         initialF.setAnt(inicio);
         initialF.setSig(fin);
         fin.setAnt(initialF);
-        memactualB=memtotal;
-        memactualF=memtotal;
-        memactualW=memtotal;
+        memactualB = memtotal;
+        memactualF = memtotal;
+        memactualW = memtotal;
     }
 
     /*public static void main(String[] args) { 
-        first holi= new first();
-    }*/
-    
-    public void paginacion(){
-        
+     first holi= new first();
+     }*/
+    public void paginacion() {
+
     }
-    
-    public void segmentacion(){
+
+    public void segmentacion() {
         timer.schedule(new TimerTask() {
             public void run() {
-              // Your database code here
+                // Your database code here
                 veces--;
                 ID++;
-                proceso nuevo= new proceso(ID , tiempomax, memmax);
-                first (nuevo);
-                
-                
-                if(veces ==0){
-                     timer.cancel();
+                proceso nuevo = new proceso(ID, tiempomax, memmax);
+                first(nuevo);
+
+                if (veces == 0) {
+                    timer.cancel();
                 }
             }
         }, vel, vel);
     }
-    public void change_vel(boolean masmenos){//boton mas true boton menos false 
-       if(masmenos==true){
-           vel=(int)(vel * 1.5);
-       }
-       else{
-          vel=(int)(vel/1.5);
-       }
+
+    public void change_vel(boolean masmenos) {//boton mas true boton menos false 
+        if (masmenos == true) {
+            vel = (int) (vel * 1.5);
+        } else {
+            vel = (int) (vel / 1.5);
+        }
     }
-    public void first(proceso nuevo ){
-        boolean bandera, seencontro=false;
-        proceso actual= new proceso();
+
+    public void first(proceso nuevo) {
+        boolean bandera, seencontro = false;
+        proceso actual = new proceso();
         //actual = initialF;
         actual = initialF;
-        while(actual.sig!=null){
-            actual=actual.sig;
-            if(actual.procedimiento.getTime>0){
+        while (actual.sig != null) {
+            actual = actual.sig;
+            if (actual.procedimiento.getTime > 0) {
                 actual.procedimiento.time--;
-                if(actual.procedimiento.getTime()==0){
-                        actual.procedimiento.changeState();
-                        memactualF=memactualF+actual.procedimiento.tamanio;
+                if (actual.procedimiento.getTime() == 0) {
+                    actual.procedimiento.changeState();
+                    memactualF = memactualF + actual.procedimiento.tamanio;
                 }
             }
-            do{
-                if(actual.sig.procedimiento.getState==0 || actual.sig.procedimiento.getTime()==1){//SE CONDENSAN ESPACIOS VACIOS CONJUNTOS
-                        memactualF=memactualF+actual.sig.procedimiento.tamanio;
-                        actual.procedimiento.tamanio=actual.procedimiento.tamanio+actual.sig.procedimiento.tamanio;
-                        actual.fin=actual.inicio+actual.procedimiento.tamanio;
-                        actual.sig.sig.ant=actual;
-                        actual.sig=actual.sig.sig;
+            do {
+                if (actual.sig.procedimiento.getState == 0 || actual.sig.procedimiento.getTime() == 1) {//SE CONDENSAN ESPACIOS VACIOS CONJUNTOS
+                    memactualF = memactualF + actual.sig.procedimiento.tamanio;
+                    actual.procedimiento.tamanio = actual.procedimiento.tamanio + actual.sig.procedimiento.tamanio;
+                    actual.fin = actual.inicio + actual.procedimiento.tamanio;
+                    actual.sig.sig.ant = actual;
+                    actual.sig = actual.sig.sig;
                 }
-            }while(actual.sig.procedimiento.getState()==0 || actual.sig.procedimiento.getTime()==1);
+            } while (actual.sig.procedimiento.getState() == 0 || actual.sig.procedimiento.getTime() == 1);
 
-            if(actual.procedimiento.getState==0 && seencontro==false){
+            if (actual.procedimiento.getState == 0 && seencontro == false) {
 
-                if(actual.procedimiento.tamanio==nuevo.tamanio){
-                        actual.proceso=nuevo;
-                        memactualF=memactualF-actual.proces.tamanio;
-                        seencontro=true;
-                }
-                else if (actual.procedimiento.getMem() > nuevo.getMem()) {
+                if (actual.procedimiento.tamanio == nuevo.tamanio) {
+                    actual.proceso = nuevo;
+                    memactualF = memactualF - actual.proces.tamanio;
+                    seencontro = true;
+                } else if (actual.procedimiento.getMem() > nuevo.getMem()) {
                     memoria libre = new memoria(actual, actual.sig, (actual.procedimiento.getMem() - nuevo.getMem()), 0);
                     actual.procedimiento.tamanio = nuevo.tamanio;
                     actual.sig = libre;
@@ -121,93 +122,99 @@ public class procesamiento {
 
         }
 
-        if(seencontro==false){
-                eliminadosF++;
+        if (seencontro == false) {
+            eliminadosF++;
         }
         //Pasar el segundo en el timer
-	mostra_estadisticas();
     }
-    
-    public void best(proceso nuevo ){
-        boolean bandera, seencontro=false;
-        proceso actual= new proceso();
+
+    public void best(proceso nuevo) {
+        boolean sencontro = false;
+        int dif;
+        int min = Integer.MAX_VALUE;
+        memoria auxiliar = null;
+        boolean bandera, seencontro = false;
+        proceso actual = new proceso();
         //actual = initialF;
         actual = initialB;
-        while(actual.sig!=null){
-            actual=actual.sig;
-            if(actual.procedimiento.getTime()>0){
+        while (actual.sig != null) {
+            actual = actual.sig;
+            if (actual.procedimiento.getTime() > 0) {
                 actual.procedimiento.time--;
-                if(actual.procedimiento.getTime()==0){
-                        actual.procedimiento.changeState();
-                        memactualB=memactualB+actual.procedimiento.tamanio;
+                if (actual.procedimiento.getTime() == 0) {
+                    actual.procedimiento.changeState();
+                    memactualB = memactualB + actual.procedimiento.tamanio;
                 }
             }
-            do{
-                if(actual.sig.procedimiento.getState==0 || actual.sig.procedimiento.getTime()==1){//SE CONDENSAN ESPACIOS VACIOS CONJUNTOS
-                        memactualB=memactualB+actual.sig.procedimiento.tamanio;
-                        actual.procedimiento.tamanio=actual.procedimiento.tamanio+actual.sig.procedimiento.tamanio;
-                        actual.fin=actual.inicio+actual.procedimiento.tamanio;
-                        actual.sig.sig.ant=actual;
-                        actual.sig=actual.sig.sig;
+            do {
+                if (actual.sig.procedimiento.getState == 0 || actual.sig.procedimiento.getTime() == 1) {//SE CONDENSAN ESPACIOS VACIOS CONJUNTOS
+                    memactualB = memactualB + actual.sig.procedimiento.tamanio;
+                    actual.procedimiento.tamanio = actual.procedimiento.tamanio + actual.sig.procedimiento.tamanio;
+                    actual.fin = actual.inicio + actual.procedimiento.tamanio;
+                    actual.sig.sig.ant = actual;
+                    actual.sig = actual.sig.sig;
                 }
-            }while(actual.sig.procedimiento.getState()==0 || actual.sig.procedimiento.getTime()==1);
+            } while (actual.sig.procedimiento.getState() == 0 || actual.sig.procedimiento.getTime() == 1);
 
-            if(actual.procedimiento.getState==0 && seencontro==false){
+            if (actual.proceso.getState == 0 && seencontro == false) {
 
-                if(actual.procedimiento.tamanio==nuevo.tamanio){
-                        actual.proceso=nuevo;
-                        memactualB=memactualB-actual.proces.tamanio;
-                        seencontro=true;
-                }
-                else if (actual.procedimiento.getMem() > nuevo.getMem()) {
-                    memoria libre = new memoria(actual, actual.sig, (actual.procedimiento.getMem() - nuevo.getMem()), 0);
-                    actual.procedimiento.tamanio = nuevo.tamanio;
-                    actual.sig = libre;
-                    actual.fin = actual.inicio + nuevo.tamanio;
-                    libre.inicio = actual.fin + 1;
-                    memactualB = memactualB - actual.procedimiento.tamanio;
+                if (actual.proceso.tamanio == nuevo.tamanio) {
+                    actual.proceso = nuevo;
+                    memactualB = memactualB - actual.proces.tamanio;
                     seencontro = true;
+                } else if (actual.proceso.tamanio > nuevo.tamanio) {
+                    dif = actual.proceso.tamanio - nuevo.tamanio;
+                    if (dif < min) {
+                        auxiliar = actual;
+                        min = dif;
+                    }
                 }
 
             }
 
         }
 
-        if(seencontro==false){
-                eliminadosF++;
+        if (seencontro == false && auxiliar != null) {
+            actual = auxiliar;
+            memoria libre= new memoria(actual, actual.sig, (actual.proceso.tamanio - nuevo.tamanio), 0);
+            actual.proceso.tamanio = nuevo.tamanio;
+            actual.sig = libre;
+            actual.fin = actual.inicio + nuevo.tamanio;
+            libre.inicio = actual.fin + 1;
+            memactualB = memactualB - actual.proceso.tamanio;
+            stadB.addMemoria(actual.proceso.tamanio);
+        } else {
+            eliminadosB++;
         }
-        //Pasar el segundo en el timer
-	mostra_estadisticas();
-    }
-    
-    
-    public void mostra_estadisticas(){
-
     }
 
+    public void mostrar_estadisticas() {
+
+    }
 
 }
 
+class first {
 
-
-class first{
     int veces;
-    public first(){
-        veces=10;
+
+    public first() {
+        veces = 10;
         segmentacion();
     }
     Timer timer = new Timer();
-    public void segmentacion(){
+
+    public void segmentacion() {
         timer.schedule(new TimerTask() {
             public void run() {
-              // Your database code here
+                // Your database code here
                 veces--;
                 System.out.println("holi");
-                if(veces ==0){
-                     timer.cancel();
+                if (veces == 0) {
+                    timer.cancel();
                 }
             }
-        }, 1*1000, 1*1000);
-        
+        }, 1 * 1000, 1 * 1000);
+
     }
 }
