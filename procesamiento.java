@@ -11,6 +11,10 @@ import java.util.TimerTask;
  * @author axel y wendy XD
  */
 
+<<<<<<< HEAD
+=======
+//holas
+>>>>>>> origin/master
 public class procesamiento {
     Timer timer = new Timer();
     int ID=1;
