@@ -10,6 +10,8 @@ import java.util.TimerTask;
  *
  * @author axel
  */
+
+//holas
 public class procesamiento {
     Timer timer = new Timer();
     int ID=1;
