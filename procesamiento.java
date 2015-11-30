@@ -77,16 +77,10 @@ public class procesamiento {
             vel = (int) (vel / 1.5);
         }
     }
-<<<<<<< HEAD
 
-    public void first(proceso nuevo) {
-        boolean bandera, seencontro = false;
-        proceso actual = new proceso();
-=======
     public void first(proceso nuevo ){
         boolean seencontro=false;
         proceso actual= new proceso();
->>>>>>> origin/master
         //actual = initialF;
         actual = initialF;
         while (actual.sig != null) {
@@ -133,78 +127,13 @@ public class procesamiento {
         }
         //Pasar el segundo en el timer
     }
-<<<<<<< HEAD
 
     public void best(proceso nuevo) {
-        boolean sencontro = false;
         int dif;
         int min = Integer.MAX_VALUE;
         memoria auxiliar = null;
         boolean bandera, seencontro = false;
-        proceso actual = new proceso();
-=======
-    
-    public void worst(proceso nuevo ){
-        boolean seencontro=false;
         proceso actual= new proceso();
-        int dif;
-        int max=-1;
-        memoria auxiliar=null;
-
-        
-        actual = initialW;
-        while(actual.sig!=null){
-            actual=actual.sig;
-            if(actual.procedimiento.getTime>0){
-                actual.procedimiento.time--;
-                if(actual.procedimiento.getTime()==0){
-                        actual.procedimiento.changeState();
-                        memactualW=memactualW+actual.procedimiento.tamanio;
-                }
-            }
-            do{
-                if(actual.sig.procedimiento.getState==0 || actual.sig.procedimiento.getTime()==1){//SE CONDENSAN ESPACIOS VACIOS CONJUNTOS
-                        memactualW=memactualW+actual.sig.procedimiento.tamanio;
-                        actual.procedimiento.tamanio=actual.procedimiento.tamanio+actual.sig.procedimiento.tamanio;
-                        actual.fin=actual.inicio+actual.procedimiento.tamanio;
-                        actual.sig.sig.ant=actual;
-                        actual.sig=actual.sig.sig;
-                }
-            }while(actual.sig.procedimiento.getState()==0 || actual.sig.procedimiento.getTime()==1);
-
-            if(actual.procedimiento.getState==0 && seencontro==false){
-                if(actual.proceso.tamanio>nuevo.tamanio){
-                    dif=actual.proceso.tamanio-nuevo.tamanio;
-                    if(dif>max){
-                        auxiliar=actual;
-                        max=dif;
-                    }
-                }
-            }
-
-        }
-
-        if(seencontro==false && auxiliar!=null){
-            memoria libre = new memoria(actual, actual.sig, (actual.procedimiento.getMem() - nuevo.getMem()), 0);
-            actual.proceso.tamanio=nuevo.tamanio;
-            actual=auxiliar;
-            actual.procedimiento.tamanio = nuevo.tamanio;
-            actual.sig = libre;
-            actual.fin = actual.inicio + nuevo.tamanio;
-            libre.inicio = actual.fin + 1;
-            memactualF = memactualF - actual.procedimiento.tamanio;
-            seencontro = true;
-        }
-        else{
-            eliminadosW++;
-        }
-
-    }
-    
-    public void best(proceso nuevo ){
-        boolean seencontro=false;
-        proceso actual= new proceso();
->>>>>>> origin/master
         //actual = initialF;
         actual = initialB;
         while (actual.sig != null) {
