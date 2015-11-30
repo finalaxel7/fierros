@@ -8,8 +8,9 @@ import java.util.Timer;
 import java.util.TimerTask;
 /**
  *
- * @author axel
+ * @author axel y wendy XD
  */
+
 public class procesamiento {
     Timer timer = new Timer();
     int ID=1;
