@@ -1,11 +1,11 @@
-package simulador_procesos;
+package simulador_procesos.fierros;
 
 public class memoria {
     public int inicio;
     public int fin;
     public memoria ant;
-    memoria sig;
-    proceso procedimiento;
+    public memoria sig;
+    public proceso procedimiento;
     
     public memoria(){
         ant=null;
